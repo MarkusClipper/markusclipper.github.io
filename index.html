@@ -410,6 +410,7 @@
             height: 100%;
             object-fit: cover;
             transition: transform 0.3s ease;
+            pointer-events: none;
         }
 
         .carousel-item:hover .carousel-preview img {
@@ -785,10 +786,10 @@
     <nav id="navbar">
         <div class="nav-content">
             <ul>
-                <li><a href="#" data-page="home">Home</a></li>
-                <li><a href="#" data-page="work">Work</a></li>
-                <li><a href="#" data-page="scripts">Scripts</a></li>
-                <li><a href="#" data-page="about">About</a></li>
+                <li><a href="javascript:void(0)" data-page="home">Home</a></li>
+                <li><a href="javascript:void(0)" data-page="work">Work</a></li>
+                <li><a href="javascript:void(0)" data-page="scripts">Scripts</a></li>
+                <li><a href="javascript:void(0)" data-page="about">About</a></li>
             </ul>
             <a href="https://www.linkedin.com/in/markus-clipper" target="_blank" class="linkedin-link">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -839,7 +840,7 @@
                             <h3>Framestore</h3>
                             <div class="role">FX & Creature FX TD</div>
                             <div class="date">2023 - 2026</div>
-                            <p>Executed fat, cloth, and hair simulations for hero assets. Created FX elements for high-end commercial work across New York, LA, and Chicago teams.</p>
+                            <p>Created FX elements for high-end commercial work across New York, LA, and Chicago teams.</p>
                         </div>
                     </div>
 
@@ -860,10 +861,10 @@
                             <img src="vcu-ica-logo.png" alt="VCU ICA">
                         </div>
                         <div class="experience-details">
-                            <h3>VCU ICA Exhibition</h3>
+                            <h3>VCU ICA</h3>
                             <div class="role">FX Artist</div>
                             <div class="date">2021 - 2022</div>
-                            <p>Led CG development for an in-person art installation integrating motion capture and procedural FX for ResumeAtThePointOfInterruption.</p>
+                            <p>Led CG development for an in-person art installation integrating motion capture and procedural FX.</p>
                         </div>
                     </div>
                 </div>
@@ -874,9 +875,9 @@
                 
                 <div class="carousel-container">
                     <div class="carousel-track" id="carousel-track">
-                        <div class="carousel-item" onclick="openVideoModal('1090981091', 'Commercials')">
+                        <div class="carousel-item" onclick="openVideoModal('1090981091', 'Project 1')">
                             <div class="carousel-preview">
-                                <img src="https://vumbnail.com/1090981091.jpg" alt="Commercials">
+                                <img src="https://vumbnail.com/1090981091.jpg" alt="Project 1">
                             </div>
                         </div>
 
@@ -901,12 +902,6 @@
                         <div class="carousel-item" onclick="openVideoModal('YOUR_VIDEO_ID', 'Project 5')">
                             <div class="carousel-preview">
                                 <img src="https://via.placeholder.com/400x250/1a1a1a/ff7820?text=Project+5" alt="Project 5">
-                            </div>
-                        </div>
-
-                        <div class="carousel-item" onclick="openVideoModal('YOUR_VIDEO_ID', 'Project 6')">
-                            <div class="carousel-preview">
-                                <img src="https://via.placeholder.com/400x250/1a1a1a/ff7820?text=Project+6" alt="Project 6">
                             </div>
                         </div>
                     </div>
@@ -991,37 +986,69 @@
                             <a href="https://vimeo.com/YOUR_VIDEO_ID" target="_blank">Watch Reel →</a>
                         </div>
                     </div>
-
-                    <div class="work-item">
-                        <div class="work-preview">
-                            <div class="video-container">
-                                <iframe src="https://player.vimeo.com/video/YOUR_VIDEO_ID?badge=0&autopause=0&player_id=0&app_id=58479" 
-                                        frameborder="0" 
-                                        allow="autoplay; fullscreen; picture-in-picture; clipboard-write" 
-                                        title="Project 5">
-                                </iframe>
-                            </div>
-                        </div>
-                        <div class="work-item-content">
-                            <h3>Project Title 5</h3>
-                            <p>Brief description of your role and the effects you created for this project.</p>
-                            <a href="https://vimeo.com/YOUR_VIDEO_ID" target="_blank">Watch Reel →</a>
-                        </div>
+                </div>
+            </div>
+        </div>
+         <div id="scripts" class="page">
+            <div class="reel-section">
+                <h2>Scripts</h2>
+                <div class="scripts-container">
+                    <div class="scripts-content">
+                        <h3>VEX</h3>
+                        <p>
+                            Here is where I will store and share my most commonly used scripts.
+                        </p>
+                        <h3>PYTHON</h3>
+                        <p>
+                            
+                        </p>
                     </div>
+                </div>
+            </div>
+        </div>           
 
-                    <div class="work-item">
-                        <div class="work-preview">
-                            <div class="video-container">
-                                <iframe src="https://player.vimeo.com/video/YOUR_VIDEO_ID?badge=0&autopause=0&player_id=0&app_id=58479" 
-                                        frameborder="0" 
-                                        allow="autoplay; fullscreen; picture-in-picture; clipboard-write" 
-                                        title="Project 6">
-                                </iframe>
-                            </div>
-                        </div>
-                        <div class="work-item-content">
-                            <h3>Project Title 6</h3>
-                            <p>Brief description of your role and the effects you created for this project.</p>
-                            <a href="https://vimeo.com/YOUR_VIDEO_ID" target="_blank">Watch Reel →</a>
-                        </div>
+         <div id="about" class="page">
+            <div class="reel-section">
+                <h2>About Me</h2>
+                <div class="about-container">
+                    <div class="about-photo">
+                        <img src="markus-pic.jpg" alt="Markus Clipper">
                     </div>
+                    <div class="about-content">
+                        <h3>Hello, I'm Markus</h3>
+                        <p>
+                            I'm an FX & Creature FX Technical Director specializing in creating stunning visual effects for commercials and episodic television. With a passion for bringing impossible visuals to life, I combine technical expertise with creative problem-solving.
+                        </p>
+                        <p>
+                            My work focuses on developing sophisticated effects simulations, creature work, and dynamic FX that push the boundaries of what's possible in visual storytelling. I thrive on collaborating with creative teams to transform their vision into reality.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>           
+
+    <script>
+        const links = document.querySelectorAll('nav a');
+        const pages = document.querySelectorAll('.page');
+        const navbar = document.getElementById('navbar');
+
+        links.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetPage = link.getAttribute('data-page');
+                
+                pages.forEach(page => page.classList.remove('active'));
+                document.getElementById(targetPage).classList.add('active');
+                
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>

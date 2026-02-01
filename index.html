@@ -310,7 +310,6 @@
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.5s ease, visibility 0.5s ease;
-            cursor: pointer;
         }
 
         .video-layer.active {
@@ -318,34 +317,10 @@
             visibility: visible;
         }
 
-        .player-thumbnail {
+        .player-iframe {
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            transition: transform 0.4s ease, filter 0.4s ease;
-        }
-
-        .video-layer:hover .player-thumbnail {
-            transform: scale(1.02);
-            filter: brightness(0.7);
-        }
-
-        .play-overlay {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            pointer-events: none;
-        }
-
-        .video-layer:hover .play-overlay {
-            opacity: 1;
-        }
-
-        .play-overlay svg {
-            filter: drop-shadow(0 4px 20px rgba(255, 120, 32, 0.5));
+            border: none;
         }
 
         .page {
@@ -1112,25 +1087,25 @@
                             </div>
                         </div>
                         <div class="single-player-frame">
-                            <div class="video-layer active" id="fx-video" onclick="openVideoModal('1159904898', 'FX Reel')">
-                                <img src="https://vumbnail.com/1159904898.jpg" alt="FX Reel" class="player-thumbnail">
-                                <div class="play-overlay">
-                                    <svg width="100" height="100" viewBox="0 0 100 100" fill="none">
-                                        <circle cx="50" cy="50" r="48" stroke="#ff7820" stroke-width="2" opacity="0.3"/>
-                                        <circle cx="50" cy="50" r="50" fill="rgba(255, 120, 32, 0.1)"/>
-                                        <path d="M40 30L70 50L40 70V30Z" fill="#ff7820"/>
-                                    </svg>
-                                </div>
+                            <div class="video-layer active" id="fx-video">
+                                <iframe 
+                                    id="fx-iframe"
+                                    src="https://player.vimeo.com/video/1159904898?badge=0&autopause=0&player_id=0&app_id=58479" 
+                                    frameborder="0" 
+                                    allow="autoplay; fullscreen; picture-in-picture; clipboard-write" 
+                                    title="FX Reel"
+                                    class="player-iframe">
+                                </iframe>
                             </div>
-                            <div class="video-layer" id="cfx-video" onclick="openVideoModal('1159878274', 'Creature FX Reel')">
-                                <img src="https://vumbnail.com/1159878274.jpg" alt="Creature FX Reel" class="player-thumbnail">
-                                <div class="play-overlay">
-                                    <svg width="100" height="100" viewBox="0 0 100 100" fill="none">
-                                        <circle cx="50" cy="50" r="48" stroke="#ff7820" stroke-width="2" opacity="0.3"/>
-                                        <circle cx="50" cy="50" r="50" fill="rgba(255, 120, 32, 0.1)"/>
-                                        <path d="M40 30L70 50L40 70V30Z" fill="#ff7820"/>
-                                    </svg>
-                                </div>
+                            <div class="video-layer" id="cfx-video">
+                                <iframe 
+                                    id="cfx-iframe"
+                                    src="https://player.vimeo.com/video/1159878274?badge=0&autopause=0&player_id=0&app_id=58479" 
+                                    frameborder="0" 
+                                    allow="autoplay; fullscreen; picture-in-picture; clipboard-write" 
+                                    title="Creature FX Reel"
+                                    class="player-iframe">
+                                </iframe>
                             </div>
                         </div>
                     </div>
@@ -1466,6 +1441,9 @@
 
         // Reel selection for Option B with slider control and drag functionality
         function selectReel(videoType, button) {
+            // Get the current active video type before switching
+            const previousActive = document.querySelector('.center-toggle').getAttribute('data-active') || 'fx';
+            
             // Update toggle options
             document.querySelectorAll('.toggle-option').forEach(btn => btn.classList.remove('active'));
             button.classList.add('active');
@@ -1477,6 +1455,14 @@
             // Move the slider background
             const toggleContainer = document.querySelector('.center-toggle');
             toggleContainer.setAttribute('data-active', videoType);
+            
+            // Pause the previous video using Vimeo Player API
+            if (previousActive !== videoType) {
+                const previousIframe = document.getElementById(previousActive + '-iframe');
+                if (previousIframe && previousIframe.contentWindow) {
+                    previousIframe.contentWindow.postMessage('{"method":"pause"}', '*');
+                }
+            }
         }
 
         // Drag functionality for the slider

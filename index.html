@@ -182,15 +182,137 @@
             position: relative;
         }
 
-        .hero-reel::before {
-            content: '// <VideoPlayer src="demo-reel.mp4" />';
-            position: absolute;
-            top: -2rem;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 0.7rem;
-            color: #333;
+        /* Option B: Center Toggle with Labels */
+        .toggle-player-container {
+            margin-top: 3rem;
+            position: relative;
+        }
+
+        .reel-selector-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .selector-label {
             font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+            color: #888;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .center-toggle {
+            display: flex;
+            gap: 1rem;
+            background: rgba(20, 20, 20, 0.8);
+            padding: 0.6rem;
+            border-radius: 60px;
+            border: 1px solid rgba(255, 120, 30, 0.25);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+
+        .toggle-option {
+            background: transparent;
+            border: none;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .toggle-option:hover {
+            background: rgba(255, 120, 30, 0.1);
+        }
+
+        .toggle-option.active {
+            background: linear-gradient(135deg, #ff7820 0%, #ff9d4d 100%);
+            box-shadow: 0 4px 20px rgba(255, 120, 32, 0.4);
+        }
+
+        .option-tag {
+            font-family: 'Courier New', monospace;
+            font-size: 0.7rem;
+            color: #888;
+            letter-spacing: 2px;
+            transition: color 0.3s ease;
+        }
+
+        .toggle-option.active .option-tag {
+            color: rgba(10, 10, 10, 0.7);
+        }
+
+        .option-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #999;
+            transition: color 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .toggle-option.active .option-name {
+            color: #0a0a0a;
+        }
+
+        .single-player-frame {
+            position: relative;
+            aspect-ratio: 16/9;
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 20px 80px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 120, 30, 0.2);
+        }
+
+        .video-layer {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+            cursor: pointer;
+        }
+
+        .video-layer.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .player-thumbnail {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease, filter 0.4s ease;
+        }
+
+        .video-layer:hover .player-thumbnail {
+            transform: scale(1.02);
+            filter: brightness(0.7);
+        }
+
+        .play-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .video-layer:hover .play-overlay {
+            opacity: 1;
+        }
+
+        .play-overlay svg {
+            filter: drop-shadow(0 4px 20px rgba(255, 120, 32, 0.5));
         }
 
         .page {
@@ -643,6 +765,99 @@
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
         }
 
+        /* Resume Section Styles */
+        .resume-section {
+            margin-top: 5rem;
+            padding-top: 3rem;
+            border-top: 1px solid rgba(255, 120, 30, 0.1);
+        }
+
+        .resume-section h3 {
+            font-size: 2rem;
+            color: #ff7820;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+
+        .resume-section > p {
+            color: #b0b0b0;
+            margin-bottom: 2rem;
+            font-size: 1.05rem;
+        }
+
+        .resume-controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .resume-controls button {
+            background: rgba(20, 20, 20, 0.6);
+            border: 1px solid rgba(255, 120, 30, 0.3);
+            border-radius: 8px;
+            color: #e0e0e0;
+            padding: 0.8rem 1.6rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 0.95rem;
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .resume-controls button:hover {
+            background: rgba(255, 120, 30, 0.2);
+            border-color: #ff7820;
+            transform: translateY(-2px);
+        }
+
+        .download-btn svg {
+            transition: transform 0.3s ease;
+        }
+
+        .download-btn:hover svg {
+            transform: translateY(2px);
+        }
+
+        .pdf-viewer-container {
+            position: relative;
+            width: 100%;
+            height: 800px;
+            background: rgba(20, 20, 20, 0.6);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 120, 30, 0.2);
+            overflow: hidden;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .pdf-viewer-container:hover {
+            border-color: rgba(255, 120, 30, 0.4);
+            box-shadow: 0 20px 60px rgba(255, 120, 30, 0.2);
+        }
+
+        .pdf-viewer-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 12px;
+        }
+
+        .pdf-viewer-container.fullscreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            border-radius: 0;
+            margin: 0;
+        }
+
         .scripts-section {
             margin-bottom: 4rem;
         }
@@ -777,6 +992,39 @@
             .carousel-item {
                 min-width: 90vw;
             }
+
+            .pdf-viewer-container {
+                height: 600px;
+            }
+
+            .resume-controls {
+                flex-direction: column;
+            }
+
+            .resume-controls button {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .center-toggle {
+                flex-direction: column;
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .toggle-option {
+                width: 100%;
+                padding: 1rem 2rem;
+            }
+
+            .option-name {
+                font-size: 1rem;
+            }
+
+            .play-overlay svg {
+                width: 80px;
+                height: 80px;
+            }
         }
     </style>
 </head>
@@ -817,12 +1065,42 @@
                     </div>
                 </div>
                 <div class="hero-reel">
-                    <div class="video-container">
-                        <iframe src="https://player.vimeo.com/video/700561284?badge=0&autopause=0&player_id=0&app_id=58479" 
-                                frameborder="0" 
-                                allow="autoplay; fullscreen; picture-in-picture; clipboard-write" 
-                                title="Demo Reel">
-                        </iframe>
+                    <div class="toggle-player-container">
+                        <div class="reel-selector-header">
+                            <span class="selector-label">Select Reel Type</span>
+                            <div class="center-toggle">
+                                <button class="toggle-option active" onclick="selectReel('fx', this)">
+                                    <span class="option-tag">// FX</span>
+                                    <span class="option-name">FX Reel</span>
+                                </button>
+                                <button class="toggle-option" onclick="selectReel('cfx', this)">
+                                    <span class="option-tag">// CFX</span>
+                                    <span class="option-name">Creature FX Reel</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="single-player-frame">
+                            <div class="video-layer active" id="fx-video" onclick="openVideoModal('1159904898', 'FX Reel')">
+                                <img src="https://vumbnail.com/1159904898.jpg" alt="FX Reel" class="player-thumbnail">
+                                <div class="play-overlay">
+                                    <svg width="100" height="100" viewBox="0 0 100 100" fill="none">
+                                        <circle cx="50" cy="50" r="48" stroke="#ff7820" stroke-width="2" opacity="0.3"/>
+                                        <circle cx="50" cy="50" r="50" fill="rgba(255, 120, 32, 0.1)"/>
+                                        <path d="M40 30L70 50L40 70V30Z" fill="#ff7820"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="video-layer" id="cfx-video" onclick="openVideoModal('1159878274', 'Creature FX Reel')">
+                                <img src="https://vumbnail.com/1159878274.jpg" alt="Creature FX Reel" class="player-thumbnail">
+                                <div class="play-overlay">
+                                    <svg width="100" height="100" viewBox="0 0 100 100" fill="none">
+                                        <circle cx="50" cy="50" r="48" stroke="#ff7820" stroke-width="2" opacity="0.3"/>
+                                        <circle cx="50" cy="50" r="50" fill="rgba(255, 120, 32, 0.1)"/>
+                                        <path d="M40 30L70 50L40 70V30Z" fill="#ff7820"/>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -875,33 +1153,27 @@
                 
                 <div class="carousel-container">
                     <div class="carousel-track" id="carousel-track">
-                        <div class="carousel-item" onclick="openVideoModal('1090981091', 'Project 1')">
+                        <div class="carousel-item" onclick="openVideoModal('1090981091', 'Pacific Rim FX Breakdown')">
                             <div class="carousel-preview">
-                                <img src="https://vumbnail.com/1090981091.jpg" alt="Project 1">
+                                <img src="https://vumbnail.com/1090981091.jpg" alt="Pacific Rim FX Breakdown">
                             </div>
                         </div>
 
-                        <div class="carousel-item" onclick="openVideoModal('YOUR_VIDEO_ID', 'Project 2')">
+                        <div class="carousel-item" onclick="openVideoModal('1160417199', 'ReAnime Showreel')">
                             <div class="carousel-preview">
-                                <img src="https://via.placeholder.com/400x250/1a1a1a/ff7820?text=Project+2" alt="Project 2">
+                                <img src="https://vumbnail.com/1160417199.jpg" alt="ReAnime Showreel">
                             </div>
                         </div>
 
-                        <div class="carousel-item" onclick="openVideoModal('YOUR_VIDEO_ID', 'Project 3')">
+                        <div class="carousel-item" onclick="openVideoModal('1159904898', 'FX Reel')">
                             <div class="carousel-preview">
-                                <img src="https://via.placeholder.com/400x250/1a1a1a/ff7820?text=Project+3" alt="Project 3">
+                                <img src="https://vumbnail.com/1159904898.jpg" alt="FX Reel">
                             </div>
                         </div>
 
-                        <div class="carousel-item" onclick="openVideoModal('YOUR_VIDEO_ID', 'Project 4')">
+                        <div class="carousel-item" onclick="openVideoModal('1159878274', 'Creature FX Reel')">
                             <div class="carousel-preview">
-                                <img src="https://via.placeholder.com/400x250/1a1a1a/ff7820?text=Project+4" alt="Project 4">
-                            </div>
-                        </div>
-
-                        <div class="carousel-item" onclick="openVideoModal('YOUR_VIDEO_ID', 'Project 5')">
-                            <div class="carousel-preview">
-                                <img src="https://via.placeholder.com/400x250/1a1a1a/ff7820?text=Project+5" alt="Project 5">
+                                <img src="https://vumbnail.com/1159878274.jpg" alt="Creature FX Reel">
                             </div>
                         </div>
                     </div>
@@ -920,76 +1192,50 @@
                 <p>Explore my project-specific reels and breakdowns.</p>
                 
                 <div class="work-grid">
-                    <div class="work-item" onclick="openVideoModal('1090981091', 'Project Title 1')">
+                    <div class="work-item" onclick="openVideoModal('1090981091', 'Pacific Rim FX Breakdown')">
                         <div class="work-preview">
-                            <div class="video-container">
-                                <iframe src="https://player.vimeo.com/video/1090981091?badge=0&autopause=0&player_id=0&app_id=58479" 
-                                        frameborder="0" 
-                                        allow="autoplay; fullscreen; picture-in-picture; clipboard-write" 
-                                        title="Project 1">
-                                </iframe>
-                            </div>
+                            <img src="https://vumbnail.com/1090981091.jpg" alt="Pacific Rim FX Breakdown">
                         </div>
                         <div class="work-item-content">
-                            <h3>Project Title 1</h3>
+                            <h3>Pacific Rim FX Breakdown</h3>
                             <p>Brief description of your role and the effects you created for this project.</p>
                         </div>
                     </div>
 
-                    <div class="work-item">
+                    <div class="work-item" onclick="openVideoModal('1160417199', 'ReAnime Showreel')">
                         <div class="work-preview">
-                            <div class="video-container">
-                                <iframe src="https://player.vimeo.com/video/YOUR_VIDEO_ID?badge=0&autopause=0&player_id=0&app_id=58479" 
-                                        frameborder="0" 
-                                        allow="autoplay; fullscreen; picture-in-picture; clipboard-write" 
-                                        title="Project 2">
-                                </iframe>
-                            </div>
+                            <img src="https://vumbnail.com/1160417199.jpg" alt="ReAnime Showreel">
                         </div>
                         <div class="work-item-content">
-                            <h3>Project Title 2</h3>
+                            <h3>ReAnime Showreel</h3>
                             <p>Brief description of your role and the effects you created for this project.</p>
-                            <a href="https://vimeo.com/YOUR_VIDEO_ID" target="_blank">Watch Reel →</a>
                         </div>
                     </div>
 
-                    <div class="work-item">
+                    <div class="work-item" onclick="openVideoModal('1159904898', 'FX Reel')">
                         <div class="work-preview">
-                            <div class="video-container">
-                                <iframe src="https://player.vimeo.com/video/YOUR_VIDEO_ID?badge=0&autopause=0&player_id=0&app_id=58479" 
-                                        frameborder="0" 
-                                        allow="autoplay; fullscreen; picture-in-picture; clipboard-write" 
-                                        title="Project 3">
-                                </iframe>
-                            </div>
+                            <img src="https://vumbnail.com/1159904898.jpg" alt="FX Reel">
                         </div>
                         <div class="work-item-content">
-                            <h3>Project Title 3</h3>
+                            <h3>FX Reel</h3>
                             <p>Brief description of your role and the effects you created for this project.</p>
-                            <a href="https://vimeo.com/YOUR_VIDEO_ID" target="_blank">Watch Reel →</a>
                         </div>
                     </div>
 
-                    <div class="work-item">
+                    <div class="work-item" onclick="openVideoModal('1159878274', 'Creature FX Reel')">
                         <div class="work-preview">
-                            <div class="video-container">
-                                <iframe src="https://player.vimeo.com/video/YOUR_VIDEO_ID?badge=0&autopause=0&player_id=0&app_id=58479" 
-                                        frameborder="0" 
-                                        allow="autoplay; fullscreen; picture-in-picture; clipboard-write" 
-                                        title="Project 4">
-                                </iframe>
-                            </div>
+                            <img src="https://vumbnail.com/1159878274.jpg" alt="Creature FX Reel">
                         </div>
                         <div class="work-item-content">
-                            <h3>Project Title 4</h3>
+                            <h3>Creature FX Reel</h3>
                             <p>Brief description of your role and the effects you created for this project.</p>
-                            <a href="https://vimeo.com/YOUR_VIDEO_ID" target="_blank">Watch Reel →</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-         <div id="scripts" class="page">
+        
+        <div id="scripts" class="page">
             <div class="reel-section">
                 <h2>Scripts</h2>
                 <div class="scripts-container">
@@ -1007,7 +1253,7 @@
             </div>
         </div>           
 
-         <div id="about" class="page">
+        <div id="about" class="page">
             <div class="reel-section">
                 <h2>About Me</h2>
                 <div class="about-container">
@@ -1024,11 +1270,54 @@
                         </p>
                     </div>
                 </div>
+
+                <!-- Resume Section -->
+                <div class="resume-section">
+                    <h3>Resume</h3>
+                    <p>View or download my complete resume below.</p>
+                    
+                    <div class="resume-controls">
+                        <button class="download-btn" onclick="downloadResume()">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="7 10 12 15 17 10"></polyline>
+                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                            </svg>
+                            Download PDF
+                        </button>
+                        <button class="fullscreen-btn" onclick="toggleFullscreen()">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
+                            </svg>
+                            Fullscreen
+                        </button>
+                    </div>
+
+                    <div class="pdf-viewer-container" id="pdf-viewer-container">
+                        <iframe 
+                            id="resume-pdf"
+                            src="resume.pdf" 
+                            type="application/pdf"
+                            title="Markus Clipper Resume">
+                        </iframe>
+                    </div>
+                </div>
             </div>
-        </div>           
+        </div>
+    </div>
+
+    <!-- Video Modal -->
+    <div class="video-modal" id="video-modal">
+        <div class="video-modal-content">
+            <div class="video-modal-title" id="modal-title"></div>
+            <button class="video-modal-close" onclick="closeVideoModal()">×</button>
+            <iframe id="modal-iframe" src="" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    </div>
 
     <script>
-        const links = document.querySelectorAll('nav a');
+        // Navigation
+        const links = document.querySelectorAll('nav a[data-page]');
         const pages = document.querySelectorAll('.page');
         const navbar = document.getElementById('navbar');
 
@@ -1051,4 +1340,121 @@
                 navbar.classList.remove('scrolled');
             }
         });
+
+        // Carousel Navigation
+        const carouselTrack = document.getElementById('carousel-track');
+        const prevBtn = document.getElementById('carousel-prev');
+        const nextBtn = document.getElementById('carousel-next');
+
+        if (prevBtn && nextBtn && carouselTrack) {
+            prevBtn.addEventListener('click', () => {
+                carouselTrack.scrollBy({ left: -400, behavior: 'smooth' });
+            });
+
+            nextBtn.addEventListener('click', () => {
+                carouselTrack.scrollBy({ left: 400, behavior: 'smooth' });
+            });
+        }
+
+        // Video Modal Functions
+        function openVideoModal(videoId, title) {
+            const modal = document.getElementById('video-modal');
+            const iframe = document.getElementById('modal-iframe');
+            const modalTitle = document.getElementById('modal-title');
+            
+            if (modal && iframe && modalTitle) {
+                iframe.src = `https://player.vimeo.com/video/${videoId}?autoplay=1`;
+                modalTitle.textContent = title;
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeVideoModal() {
+            const modal = document.getElementById('video-modal');
+            const iframe = document.getElementById('modal-iframe');
+            
+            if (modal && iframe) {
+                modal.classList.remove('active');
+                iframe.src = '';
+                document.body.style.overflow = '';
+            }
+        }
+
+        // Close modal on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeVideoModal();
+            }
+        });
+
+        // Close modal on background click
+        document.getElementById('video-modal')?.addEventListener('click', (e) => {
+            if (e.target.id === 'video-modal') {
+                closeVideoModal();
+            }
+        });
+
+        // Resume Functions
+        function downloadResume() {
+            // Create a temporary link element
+            const link = document.createElement('a');
+            link.href = 'resume.pdf';
+            link.download = 'Markus_Clipper_Resume.pdf';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function toggleFullscreen() {
+            const container = document.getElementById('pdf-viewer-container');
+            
+            if (!container) return;
+            
+            if (!document.fullscreenElement) {
+                container.requestFullscreen().catch(err => {
+                    console.error('Error attempting to enable fullscreen:', err);
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        }
+
+        // Handle fullscreen change events
+        document.addEventListener('fullscreenchange', () => {
+            const container = document.getElementById('pdf-viewer-container');
+            if (container) {
+                if (document.fullscreenElement) {
+                    container.classList.add('fullscreen');
+                } else {
+                    container.classList.remove('fullscreen');
+                }
+            }
+        });
+
+        // Reel selection for Option B
+        function selectReel(videoType, button) {
+            // Update toggle options
+            document.querySelectorAll('.toggle-option').forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+            
+            // Update video layers
+            document.querySelectorAll('.video-layer').forEach(layer => layer.classList.remove('active'));
+            document.getElementById(videoType + '-video').classList.add('active');
+        }
+
+        // Particle Canvas (placeholder - you can add actual particle animation here)
+        const canvas = document.getElementById('particles-canvas');
+        if (canvas) {
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            window.addEventListener('resize', () => {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            });
+        }
     </script>
+</body>
+</html>

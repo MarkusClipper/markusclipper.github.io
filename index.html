@@ -872,9 +872,31 @@
 
         .scripts-section h3 {
             font-size: 2rem;
-            color: #ff7820;
-            margin-bottom: 2rem;
+            color: #e0e0e0;
+            margin-bottom: 1rem;
             font-weight: 600;
+            letter-spacing: 1px;
+            position: relative;
+            display: inline-block;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+
+        .scripts-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 60%;
+            height: 3px;
+            background: linear-gradient(90deg, #ff7820, transparent);
+            border-radius: 2px;
+        }
+
+        .scripts-section > p {
+            color: #b0b0b0;
+            margin-bottom: 2rem;
+            font-size: 1.05rem;
+            line-height: 1.7;
         }
 
         .vex-scripts-grid {
@@ -888,14 +910,7 @@
             border-radius: 12px;
             padding: 2rem;
             border: 1px solid rgba(255, 120, 30, 0.1);
-            transition: all 0.3s ease;
             backdrop-filter: blur(10px);
-        }
-
-        .vex-script-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(255, 120, 30, 0.4);
-            box-shadow: 0 15px 40px rgba(255, 120, 30, 0.15);
         }
 
         .vex-script-card h4 {
@@ -928,6 +943,40 @@
         .vex-code-block pre {
             margin: 0;
             white-space: pre;
+        }
+
+        /* VEX Syntax Highlighting - Houdini 21.0 Style */
+        .vex-keyword {
+            color: #569cd6;  /* Dark blue for keywords (for, if, while, etc.) */
+        }
+
+        .vex-type {
+            color: #9cdcfe;  /* Light blue for types (int, float, string, vector) */
+        }
+
+        .vex-function {
+            color: #8b7bc4;  /* Darker blue-purple for functions (chs, point, clamp, etc.) */
+        }
+
+        .vex-string {
+            color: #6a9955;  /* Green for strings */
+        }
+
+        .vex-number {
+            color: #d4a853;  /* Darker saturated yellow for numbers */
+        }
+
+        .vex-attr {
+            color: #dcdcaa;  /* Yellow for attributes (@ptnum, @Cd, etc.) */
+        }
+
+        .vex-var {
+            color: #d4d4d4;  /* White for variables */
+        }
+
+        .vex-comment {
+            color: #6a9955;  /* Green for comments */
+            font-style: italic;
         }
 
         .copy-button {
@@ -1245,17 +1294,35 @@
         <div id="scripts" class="page">
             <div class="reel-section">
                 <h2>Scripts</h2>
-                <div class="scripts-container">
-                    <div class="scripts-content">
-                        <h3>VEX</h3>
-                        <p>
-                            Here is where I will store and share my most commonly used scripts.
-                        </p>
-                        <h3>PYTHON</h3>
-                        <p>
-                            
-                        </p>
+                
+                <div class="scripts-section">
+                    <h3>VEX</h3>
+                    <p>Commonly used VEX snippets for Houdini workflows.</p>
+                    
+                    <div class="vex-scripts-grid">
+                        <div class="vex-script-card">
+                            <h4>Combine Paint Masks</h4>
+                            <p class="script-description">
+                                Combines multiple paint mask inputs and clamps the result to create a unified mask output.
+                            </p>
+                            <div class="vex-code-block">
+                                <button class="copy-button" onclick="copyCode(this, 'vex-code-1')">Copy</button>
+                                <pre id="vex-code-1"><span class="vex-type">string</span> <span class="vex-var">attr</span> = <span class="vex-function">chs</span>(<span class="vex-string">"attribute"</span>);
+<span class="vex-type">float</span> <span class="vex-var">nAll</span> = <span class="vex-number">0.0</span>;
+<span class="vex-keyword">for</span> (<span class="vex-type">int</span> <span class="vex-var">n</span> = <span class="vex-number">0</span>; <span class="vex-var">n</span> &lt; <span class="vex-number">4</span>; <span class="vex-var">n</span>++) {
+    <span class="vex-var">nAll</span> += <span class="vex-function">point</span>(<span class="vex-var">n</span>, <span class="vex-var">attr</span>, <span class="vex-attr">@ptnum</span>);
+}
+<span class="vex-type">float</span> <span class="vex-var">result</span> = <span class="vex-function">clamp</span>(<span class="vex-var">nAll</span>, <span class="vex-number">0</span>, <span class="vex-number">1</span>);
+<span class="vex-function">setpointattrib</span>(<span class="vex-number">0</span>, <span class="vex-var">attr</span>, <span class="vex-attr">@ptnum</span>, <span class="vex-var">result</span>);
+<span class="vex-attr">@Cd</span> = <span class="vex-var">result</span>;</pre>
+                            </div>
+                        </div>
                     </div>
+                </div>
+                
+                <div class="scripts-section">
+                    <h3>PYTHON</h3>
+                    <p>Python scripts and utilities coming soon.</p>
                 </div>
             </div>
         </div>           
@@ -1538,6 +1605,32 @@
                 }
             });
         });
+
+        // Copy code to clipboard function
+        function copyCode(button, codeId) {
+            const codeBlock = document.getElementById(codeId);
+            // Strip HTML tags and get plain text
+            const code = codeBlock.textContent || codeBlock.innerText;
+            
+            navigator.clipboard.writeText(code).then(function() {
+                // Change button text to indicate success
+                const originalText = button.textContent;
+                button.textContent = 'Copied!';
+                button.classList.add('copied');
+                
+                // Reset button after 2 seconds
+                setTimeout(function() {
+                    button.textContent = originalText;
+                    button.classList.remove('copied');
+                }, 2000);
+            }).catch(function(err) {
+                console.error('Failed to copy code: ', err);
+                button.textContent = 'Failed';
+                setTimeout(function() {
+                    button.textContent = 'Copy';
+                }, 2000);
+            });
+        }
 
         // Particle Canvas (placeholder - you can add actual particle animation here)
         const canvas = document.getElementById('particles-canvas');

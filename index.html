@@ -146,7 +146,7 @@
             font-size: 1.2rem;
             color: #888;
             font-weight: 400;
-            margin-bottom: 2rem;
+            margin-bottom: 1.2rem;
             letter-spacing: 0.5px;
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
         }
@@ -166,12 +166,6 @@
             gap: 0.3rem;
         }
 
-        .hero-meta div::before {
-            content: '//';
-            color: #333;
-            font-size: 0.7rem;
-        }
-
         .hero-meta strong {
             color: #e0e0e0;
             font-size: 0.9rem;
@@ -182,7 +176,7 @@
             position: relative;
         }
 
-        /* Option B: Center Toggle with Labels */
+        /* Option B: Center Toggle (Smaller, No Label) */
         .toggle-player-container {
             margin-top: 3rem;
             position: relative;
@@ -192,65 +186,104 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 1.2rem;
-            margin-bottom: 2rem;
-        }
-
-        .selector-label {
-            font-family: 'Courier New', monospace;
-            font-size: 0.8rem;
-            color: #888;
-            letter-spacing: 3px;
-            text-transform: uppercase;
+            gap: 0;
+            margin-bottom: 1.5rem;
         }
 
         .center-toggle {
+            position: relative;
             display: flex;
-            gap: 1rem;
-            background: rgba(20, 20, 20, 0.8);
-            padding: 0.6rem;
-            border-radius: 60px;
+            gap: 0;
+            background: rgba(20, 20, 20, 0.9);
+            padding: 0.5rem;
+            border-radius: 50px;
             border: 1px solid rgba(255, 120, 30, 0.25);
             backdrop-filter: blur(10px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.4);
         }
 
         .toggle-option {
             background: transparent;
             border: none;
-            padding: 1rem 2.5rem;
+            padding: 0.7rem 1.8rem;
             border-radius: 50px;
             cursor: pointer;
             transition: all 0.3s ease;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 0.4rem;
+            gap: 0.3rem;
+            position: relative;
+            z-index: 2;
         }
 
-        .toggle-option:hover {
-            background: rgba(255, 120, 30, 0.1);
+        .toggle-option:not(.active):hover {
+            background: rgba(255, 120, 30, 0.15);
+            transform: scale(1.05);
+        }
+
+        .toggle-option:not(.active):hover .option-tag {
+            color: #ff7820;
+        }
+
+        .toggle-option:not(.active):hover .option-name {
+            color: #e0e0e0;
         }
 
         .toggle-option.active {
+            color: #0a0a0a;
+            cursor: grab;
+        }
+
+        .toggle-option.active:active {
+            cursor: grabbing;
+        }
+
+        /* Sliding background indicator - dynamically sized */
+        .center-toggle::before {
+            content: '';
+            position: absolute;
+            top: 0.5rem;
+            left: 0.5rem;
+            height: calc(100% - 1rem);
             background: linear-gradient(135deg, #ff7820 0%, #ff9d4d 100%);
-            box-shadow: 0 4px 20px rgba(255, 120, 32, 0.4);
+            border-radius: 50px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1;
+            box-shadow: 0 4px 16px rgba(255, 120, 32, 0.4);
+            pointer-events: none;
+        }
+
+        /* Disable transition when dragging */
+        .center-toggle.dragging::before {
+            transition: none;
+        }
+
+        /* Default state - FX (smaller width) */
+        .center-toggle::before {
+            width: calc(40% - 0.25rem);
+        }
+
+        /* CFX state - wider to fit "Creature FX Reel" */
+        .center-toggle[data-active="cfx"]::before {
+            width: calc(60% - 0.25rem);
+            transform: translateX(calc(66.67%));
         }
 
         .option-tag {
             font-family: 'Courier New', monospace;
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             color: #888;
             letter-spacing: 2px;
             transition: color 0.3s ease;
         }
 
         .toggle-option.active .option-tag {
-            color: rgba(10, 10, 10, 0.7);
+            color: rgba(10, 10, 10, 0.8);
         }
 
         .option-name {
-            font-size: 1.1rem;
+            font-size: 0.95rem;
             font-weight: 600;
             color: #999;
             transition: color 0.3s ease;
@@ -1067,7 +1100,6 @@
                 <div class="hero-reel">
                     <div class="toggle-player-container">
                         <div class="reel-selector-header">
-                            <span class="selector-label">Select Reel Type</span>
                             <div class="center-toggle">
                                 <button class="toggle-option active" onclick="selectReel('fx', this)">
                                     <span class="option-tag">// FX</span>
@@ -1432,7 +1464,7 @@
             }
         });
 
-        // Reel selection for Option B
+        // Reel selection for Option B with slider control and drag functionality
         function selectReel(videoType, button) {
             // Update toggle options
             document.querySelectorAll('.toggle-option').forEach(btn => btn.classList.remove('active'));
@@ -1441,7 +1473,85 @@
             // Update video layers
             document.querySelectorAll('.video-layer').forEach(layer => layer.classList.remove('active'));
             document.getElementById(videoType + '-video').classList.add('active');
+            
+            // Move the slider background
+            const toggleContainer = document.querySelector('.center-toggle');
+            toggleContainer.setAttribute('data-active', videoType);
         }
+
+        // Drag functionality for the slider
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggleContainer = document.querySelector('.center-toggle');
+            const toggleOptions = document.querySelectorAll('.toggle-option');
+            let isDragging = false;
+            let startX = 0;
+            let currentActive = 'fx';
+
+            // Mouse events
+            toggleContainer.addEventListener('mousedown', function(e) {
+                isDragging = true;
+                startX = e.clientX;
+                toggleContainer.classList.add('dragging');
+            });
+
+            document.addEventListener('mousemove', function(e) {
+                if (!isDragging) return;
+                
+                const deltaX = e.clientX - startX;
+                const toggleRect = toggleContainer.getBoundingClientRect();
+                const threshold = toggleRect.width / 4;
+
+                // Switch based on drag distance
+                if (deltaX > threshold && currentActive === 'fx') {
+                    selectReel('cfx', toggleOptions[1]);
+                    currentActive = 'cfx';
+                    startX = e.clientX;
+                } else if (deltaX < -threshold && currentActive === 'cfx') {
+                    selectReel('fx', toggleOptions[0]);
+                    currentActive = 'fx';
+                    startX = e.clientX;
+                }
+            });
+
+            document.addEventListener('mouseup', function() {
+                if (isDragging) {
+                    isDragging = false;
+                    toggleContainer.classList.remove('dragging');
+                }
+            });
+
+            // Touch events for mobile
+            toggleContainer.addEventListener('touchstart', function(e) {
+                isDragging = true;
+                startX = e.touches[0].clientX;
+                toggleContainer.classList.add('dragging');
+            });
+
+            document.addEventListener('touchmove', function(e) {
+                if (!isDragging) return;
+                
+                const deltaX = e.touches[0].clientX - startX;
+                const toggleRect = toggleContainer.getBoundingClientRect();
+                const threshold = toggleRect.width / 4;
+
+                if (deltaX > threshold && currentActive === 'fx') {
+                    selectReel('cfx', toggleOptions[1]);
+                    currentActive = 'cfx';
+                    startX = e.touches[0].clientX;
+                } else if (deltaX < -threshold && currentActive === 'cfx') {
+                    selectReel('fx', toggleOptions[0]);
+                    currentActive = 'fx';
+                    startX = e.touches[0].clientX;
+                }
+            });
+
+            document.addEventListener('touchend', function() {
+                if (isDragging) {
+                    isDragging = false;
+                    toggleContainer.classList.remove('dragging');
+                }
+            });
+        });
 
         // Particle Canvas (placeholder - you can add actual particle animation here)
         const canvas = document.getElementById('particles-canvas');

@@ -1139,7 +1139,7 @@
                             <div class="video-layer active" id="fx-video">
                                 <iframe 
                                     id="fx-iframe"
-                                    src="https://player.vimeo.com/video/1159904898?badge=0&autopause=0&player_id=0&app_id=58479" 
+                                    src="https://player.vimeo.com/video/1159904898?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479&controls=1&sidedock=0" 
                                     frameborder="0" 
                                     allow="autoplay; fullscreen; picture-in-picture; clipboard-write" 
                                     title="FX Reel"
@@ -1149,7 +1149,7 @@
                             <div class="video-layer" id="cfx-video">
                                 <iframe 
                                     id="cfx-iframe"
-                                    src="https://player.vimeo.com/video/1159878274?badge=0&autopause=0&player_id=0&app_id=58479" 
+                                    src="https://player.vimeo.com/video/1159878274?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479&controls=1&sidedock=0" 
                                     frameborder="0" 
                                     allow="autoplay; fullscreen; picture-in-picture; clipboard-write" 
                                     title="Creature FX Reel"
@@ -1437,7 +1437,7 @@
             const modalTitle = document.getElementById('modal-title');
             
             if (modal && iframe && modalTitle) {
-                iframe.src = `https://player.vimeo.com/video/${videoId}?autoplay=1`;
+                iframe.src = `https://player.vimeo.com/video/${videoId}?autoplay=1&title=0&byline=0&portrait=0&badge=0&controls=1&sidedock=0`;
                 modalTitle.textContent = title;
                 modal.classList.add('active');
                 document.body.style.overflow = 'hidden';

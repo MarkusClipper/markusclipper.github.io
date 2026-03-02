@@ -1098,7 +1098,7 @@
         <div class="nav-content">
             <ul>
                 <li><a href="javascript:void(0)" data-page="home">Home</a></li>
-                <!-- <li><a href="javascript:void(0)" data-page="work">Work</a></li> -->
+                <li><a href="javascript:void(0)" data-page="work">Work</a></li>
                 <li><a href="javascript:void(0)" data-page="scripts">Scripts</a></li>
                 <li><a href="javascript:void(0)" data-page="about">About</a></li>
             </ul>
@@ -1346,7 +1346,7 @@
                             I am an FX & Creature FX Technical Director with over 4 years of experience in creating effects for commercials and episodic television.
                         </p>
                         <p>
-                            <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="95f8f4e7fee0e6f9f6f9fce5e5f0e7d5f2f8f4fcf9bbf6faf8">[email&#160;protected]</a>
+                            markuslclipper@gmail.com
                         </p>
                     </div>
                 </div>
@@ -1395,7 +1395,7 @@
         </div>
     </div>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    <script>
         // Navigation
         const links = document.querySelectorAll('nav a[data-page]');
         const pages = document.querySelectorAll('.page');
@@ -1643,4 +1643,13 @@
         if (canvas) {
             const ctx = canvas.getContext('2d');
             canvas.width = window.innerWidth;
-            canvas.height
+            canvas.height = window.innerHeight;
+
+            window.addEventListener('resize', () => {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            });
+        }
+    </script>
+</body>
+</html>

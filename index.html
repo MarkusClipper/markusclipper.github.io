@@ -1330,7 +1330,42 @@
                         </div>
                     </div>
                 </div>
+                   <div class="scripts-section">
+                    <h3>PYTHON</h3>
+                    <p>Python scripts for Houdini workflows and utilities.</p>
+                    
+                    <div class="vex-scripts-grid">
+                        <div class="vex-script-card">
+                            <h4>Display Cache Size</h4>
+                            <p class="script-description">
+                                Used on a custom file cache to find the size on disk of the current cache.
+                            </p>
+                            <div class="vex-code-block">
+                                <button class="copy-button" onclick="copyCode(this, 'python-code-1')">Copy</button>
+                                <pre id="python-code-1"><span class="vex-keyword">def</span> <span class="vex-function">getCacheSize</span>(<span class="vex-var">node</span>):
+    <span class="vex-var">n</span> = <span class="vex-var">hou</span>.<span class="vex-function">node</span>(<span class="vex-string">"."</span>);
+    <span class="vex-var">cachedir</span> = <span class="vex-var">n</span>.<span class="vex-function">parm</span>(<span class="vex-string">"cachedir"</span>).<span class="vex-function">eval</span>()
+    <span class="vex-var">version</span> = <span class="vex-var">n</span>.<span class="vex-function">parm</span>(<span class="vex-string">"readversion"</span>).<span class="vex-function">eval</span>() + <span class="vex-string">"/"</span>
+    <span class="vex-var">cachedirVersion</span> = <span class="vex-var">os</span>.<span class="vex-var">path</span>.<span class="vex-function">join</span>(<span class="vex-var">cachedir</span>,<span class="vex-var">version</span>)
+    <span class="vex-var">cacheSize</span> = <span class="vex-number">0.0</span>
+    
+    <span class="vex-keyword">for</span> <span class="vex-var">dirpath</span>, <span class="vex-var">dirnames</span>, <span class="vex-var">filenames</span> <span class="vex-keyword">in</span> <span class="vex-var">os</span>.<span class="vex-function">walk</span>(<span class="vex-var">cachedirVersion</span>):
+        <span class="vex-keyword">for</span> <span class="vex-var">f</span> <span class="vex-keyword">in</span> <span class="vex-var">filenames</span>:
+            <span class="vex-var">fp</span> = <span class="vex-var">os</span>.<span class="vex-var">path</span>.<span class="vex-function">join</span>(<span class="vex-var">dirpath</span>, <span class="vex-var">f</span>)
+            <span class="vex-comment"># skip if it is symbolic link</span>
+            <span class="vex-keyword">if</span> <span class="vex-keyword">not</span> <span class="vex-var">os</span>.<span class="vex-var">path</span>.<span class="vex-function">islink</span>(<span class="vex-var">fp</span>):
+                <span class="vex-var">cacheSize</span> += <span class="vex-var">os</span>.<span class="vex-var">path</span>.<span class="vex-function">getsize</span>(<span class="vex-var">fp</span>)
                 
+    <span class="vex-var">cacheSize</span> /= <span class="vex-number">1e9</span>
+    <span class="vex-var">cacheSize</span> = <span class="vex-function">round</span>(<span class="vex-var">cacheSize</span>, <span class="vex-number">1</span>)
+    
+    <span class="vex-var">n</span>.<span class="vex-function">parm</span>(<span class="vex-string">'descriptivelabel'</span>).<span class="vex-function">set</span>(<span class="vex-function">str</span>(<span class="vex-var">cacheSize</span>) + <span class="vex-string">" GB"</span>)</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> 
                 <div class="scripts-section">
                     <h3>PYTHON</h3>
                     <p>Python scripts and utilities coming soon.</p>

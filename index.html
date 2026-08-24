@@ -588,86 +588,6 @@
             transform: translateY(-2px);
         }
 
-        .work-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2.5rem;
-            margin-top: 2rem;
-        }
-
-        .work-item {
-            background: rgba(20, 20, 20, 0.6);
-            border-radius: 12px;
-            overflow: hidden;
-            border: 1px solid rgba(255, 120, 30, 0.1);
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-            cursor: pointer;
-        }
-
-        .work-item:hover {
-            transform: translateY(-8px);
-            border-color: rgba(255, 120, 30, 0.4);
-            box-shadow: 0 15px 40px rgba(255, 120, 30, 0.15);
-        }
-
-        .work-preview {
-            width: 100%;
-            height: 220px;
-            background: #000;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .work-preview img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s ease;
-        }
-
-        .work-item:hover .work-preview img {
-            transform: scale(1.1);
-        }
-
-        .work-preview video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0;
-            position: absolute;
-            top: 0;
-            left: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .work-item:hover .work-preview video {
-            opacity: 1;
-        }
-
-        .work-item-content {
-            padding: 2rem;
-        }
-
-        .work-item h3 {
-            font-size: 1.4rem;
-            margin-bottom: 0.75rem;
-            font-weight: 600;
-            color: #ff7820;
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-        }
-
-        .work-item p {
-            color: #aaa;
-            margin-bottom: 1.5rem;
-            font-size: 0.95rem;
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-        }
-
-        .work-item a {
-            display: none;
-        }
-
         /* Video Modal */
         .video-modal {
             display: none;
@@ -1016,7 +936,6 @@
             }
 
             .experience-grid,
-            .work-grid,
             .vex-scripts-grid {
                 grid-template-columns: 1fr;
             }
@@ -1249,18 +1168,6 @@
                                 <img src="https://vumbnail.com/1160417199.jpg" alt="ReAnime Showreel">
                             </div>
                         </div>
-
-                        <div class="carousel-item" onclick="openVideoModal('1159904898', 'FX Reel')">
-                            <div class="carousel-preview">
-                                <img src="https://vumbnail.com/1159904898.jpg" alt="FX Reel">
-                            </div>
-                        </div>
-
-                        <div class="carousel-item" onclick="openVideoModal('1159878274', 'Creature FX Reel')">
-                            <div class="carousel-preview">
-                                <img src="https://vumbnail.com/1159878274.jpg" alt="Creature FX Reel">
-                            </div>
-                        </div>
                     </div>
                 </div>
 
@@ -1271,55 +1178,6 @@
             </div>
         </div>
 
-        <div id="work" class="page">
-            <div class="reel-section">
-                <h2>Selected Work</h2>
-                <p>Explore my project-specific reels and breakdowns.</p>
-                
-                <div class="work-grid">
-                    <div class="work-item" onclick="openVideoModal('1090981091', 'Pacific Rim FX Breakdown')">
-                        <div class="work-preview">
-                            <img src="https://vumbnail.com/1090981091.jpg" alt="Pacific Rim FX Breakdown">
-                        </div>
-                        <div class="work-item-content">
-                            <h3>Pacific Rim FX Breakdown</h3>
-                            <p>Brief description of your role and the effects you created for this project.</p>
-                        </div>
-                    </div>
-
-                    <div class="work-item" onclick="openVideoModal('1160417199', 'ReAnime Showreel')">
-                        <div class="work-preview">
-                            <img src="https://vumbnail.com/1160417199.jpg" alt="ReAnime Showreel">
-                        </div>
-                        <div class="work-item-content">
-                            <h3>ReAnime Showreel</h3>
-                            <p>Brief description of your role and the effects you created for this project.</p>
-                        </div>
-                    </div>
-
-                    <div class="work-item" onclick="openVideoModal('1159904898', 'FX Reel')">
-                        <div class="work-preview">
-                            <img src="https://vumbnail.com/1159904898.jpg" alt="FX Reel">
-                        </div>
-                        <div class="work-item-content">
-                            <h3>FX Reel</h3>
-                            <p>Brief description of your role and the effects you created for this project.</p>
-                        </div>
-                    </div>
-
-                    <div class="work-item" onclick="openVideoModal('1159878274', 'Creature FX Reel')">
-                        <div class="work-preview">
-                            <img src="https://vumbnail.com/1159878274.jpg" alt="Creature FX Reel">
-                        </div>
-                        <div class="work-item-content">
-                            <h3>Creature FX Reel</h3>
-                            <p>Brief description of your role and the effects you created for this project.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
         <div id="scripts" class="page">
             <div class="reel-section">
                 <h2>Scripts</h2>
